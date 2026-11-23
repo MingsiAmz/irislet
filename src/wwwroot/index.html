@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Irislet</title>
+    <base href="/" />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+
+  <body>
+    <div class="app">
+      <aside class="sidebar" id="sidebar">
+        <div class="brand">
+          <div class="logo">000</div>
+          <div>
+            <div class="brand-title">Irislet</div>
+            <div class="brand-sub">org / md 预览演示</div>
+          </div>
+        </div>
+
+        <div class="search-box">
+          <input id="search" type="text" placeholder="搜索文件…" autocomplete="off">
+          <input id="openfile" type="file" name="openfile" value="" />
+        </div>
+
+        <nav class="file-tree" id="fileTree"></nav>
+
+        <div class="sidebar-foot">
+          <span class="dot"></span>
+        </div>
+      </aside>
+
+      <main class="main">
+        <header class="toolbar">
+          <div class="crumb" id="crumb"></div>
+          <div class="stats" id="stats"></div>
+
+          <div class="seg" id="modeSeg">
+            <button data-mode="preview" class="active">预览</button>
+            <button data-mode="source">源码</button>
+          </div>
+
+          <button class="icon-btn" id="expandAll" title="全部展开 / 折叠">⊟</button>
+          <button class="icon-btn" id="themeBtn" title="切换主题">◐</button>
+
+          <div class="progress" id="progress"></div>
+        </header>
+
+        <div class="body">
+          <div class="viewport" id="viewport">
+            <article class="doc" id="doc"></article>
+          </div>
+          <aside class="outline" id="outline"></aside>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>
