@@ -30,6 +30,14 @@
             "icons/128x128@2x.png",
             "icons/icon.icns",
             "icons/icon.ico"
+        ],
+        "fileAssociations": [
+            {
+              "ext": ["md", "markdown", "org"],
+              "name": "Markdown / Org 文档",
+              "description": "用 irislet 打开 Markdown / Org 文件",
+              "role": "Viewer"
+            }
         ]
     },
     "plugins": {
