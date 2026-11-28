@@ -1,11 +1,18 @@
-import { resourceDir, join } from "@tauri-apps/api/path";
+import { appDataDir, join, BaseDirectory } from "@tauri-apps/api/path";
 import { readTextFile, writeTextFile, exists, mkdir } from "@tauri-apps/plugin-fs";
 
 const fileName = "path.json";
 
 export async function getStorePath() {
-    const dir = await resourceDir();
-    return await join(dir, fileName);
+    return await join(await appDataDir(), fileName);
+}
+
+async function ensureStoreDir() {
+    try {
+        await mkdir(".", { baseDir: BaseDirectory.AppData, recursive: true });
+    } catch {
+        return;
+    }
 }
 
 export async function savePath(path) {
@@ -13,9 +20,9 @@ export async function savePath(path) {
 
     let list = [];
 
-    if (await exists(storePath)) {
-        const raw = await readTextFile(storePath);
+    if (await safeExists(storePath)) {
         try {
+            let raw = await readTextFile(storePath);
             list = JSON.parse(raw);
             if (!Array.isArray(list)) list = [];
         } catch {
@@ -25,7 +32,16 @@ export async function savePath(path) {
 
     if (!list.includes(path)) {
         list.push(path);
+        await ensureStoreDir();
         await writeTextFile(storePath, JSON.stringify(list, null, 2));
+    }
+}
+
+async function safeExists(path) {
+    try {
+        return await exists(path);
+    } catch {
+        return false; 
     }
 }
 
@@ -33,7 +49,7 @@ export async function loadPath() {
     try {
         const storePath = await getStorePath();
 
-        if (!(await exists(storePath))) return [];
+        if (!(await safeExists(storePath))) return [];
 
         const raw = await readTextFile(storePath);
         const list = JSON.parse(raw);

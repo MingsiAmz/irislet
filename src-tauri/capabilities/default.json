@@ -2,18 +2,15 @@
   "$schema": "../gen/schemas/desktop-schema.json",
   "identifier": "default",
   "description": "Capability for the main window",
-  "windows": [
-    "main"
-  ],
+  "windows": ["main"],
   "permissions": [
     "core:default",
     "opener:default",
     "dialog:allow-open",
-    "fs:allow-read-text-file",
-    "fs:allow-write-text-file",
-    "fs:allow-exists",
-    "fs:allow-mkdir",
-    "fs:allow-resource-read",
-    "fs:allow-resource-write"
+    { "identifier": "fs:allow-read-text-file",  "allow": [{ "path": "$APPDATA/**" }, { "path": "**/*.md" }, { "path": "**/*.markdown" }, { "path": "**/*.org" }] },
+    { "identifier": "fs:allow-write-text-file", "allow": [{ "path": "$APPDATA/**" }] },
+    { "identifier": "fs:allow-exists",          "allow": [{ "path": "$APPDATA/**" }] },
+    { "identifier": "fs:allow-mkdir",           "allow": [{ "path": "$APPDATA" }, { "path": "$APPDATA/**" }] }
   ]
 }
+

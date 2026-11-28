@@ -10,8 +10,7 @@ export function applyTheme(theme) {
 }
 
 export function toggleTheme(theme) {
-    let themeNow = resolveDark(theme);
-    theme.value = themeNow ? "light" : "dark";
+    theme.value = theme.value != "dark" ? "dark" : "light"; 
     localStorage.setItem("theme", theme.value);
     applyTheme(theme);
 }

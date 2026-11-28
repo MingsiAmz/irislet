@@ -1,6 +1,6 @@
 // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
-use tauri::Manager;
 use std::sync::Mutex;
+use tauri::Manager;
 use tauri::Emitter;
 
 #[derive(Default)]
@@ -16,6 +16,10 @@ pub fn run() {
     tauri::Builder::default()
         .manage(OpenedFile::default())
         .setup(|app| {
+            if let Ok(dir) = app.path().app_data_dir() {
+                let _ = std::fs::create_dir_all(&dir);
+            }
+
             #[cfg(not(target_os = "macos"))]
             {
                 use std::env;
@@ -27,6 +31,7 @@ pub fn run() {
                     app.emit("opened-file", path).ok();
                 }  
             }
+
             Ok(())
         })
         .plugin(tauri_plugin_dialog::init())
